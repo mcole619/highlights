@@ -1,4 +1,8 @@
 Highlights::Application.routes.draw do
+
+
+  devise_for :users
+
   resources :highlights do
     resources :comments
   end
