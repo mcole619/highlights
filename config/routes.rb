@@ -1,5 +1,8 @@
 Highlights::Application.routes.draw do
-  resources :highlights
+  resources :highlights do
+    resources :comments
+  end
+
 
   get "home/index"
 
