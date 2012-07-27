@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @highlight.name %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @highlight.title %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @highlight.content %>
+</p>
+
+
+<%= link_to 'Edit', edit_highlight_path(@highlight) %> |
+<%= link_to 'Back', highlights_path %>
