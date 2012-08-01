@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th>Name</th>
+    <th>User</th>
     <th>Title</th>
     <th>Description</th>
     <th></th>
@@ -12,9 +12,9 @@
 
 <% @highlights.each do |highlight| %>
   <tr>
-    <td><%= highlight.name %></td>
+    <td><%= highlight.user.email %></td>
     <td><%= highlight.title %></td>
-    <td><%= highlight.content %></td>
+    <td><%= highlight.description %></td>
     <td><%= link_to 'Show', highlight %></td>
   </tr>
 <% end %>
@@ -25,3 +25,4 @@
 <% if signed_in? %>
   <%= link_to 'New Highlight', new_highlight_path %>
 <% end %>
+

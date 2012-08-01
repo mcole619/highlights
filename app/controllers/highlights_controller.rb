@@ -1,17 +1,15 @@
 class HighlightsController < ApplicationController
-  # GET /highlights
-  # GET /highlights.json
+  before_filter :authorized_user, :only => [:edit, :destroy]
+  before_filter :authenticate_user!, :except => [:show, :index ]
   def index
     @highlights = Highlight.all
 
-    respond_to do |format|
+      respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @highlights }
     end
   end
-
-  # GET /highlights/1
-  # GET /highlights/1.json
+  
   def show
     @highlight = Highlight.find(params[:id])
 
@@ -20,27 +18,22 @@ class HighlightsController < ApplicationController
       format.json { render json: @highlight }
     end
   end
-
-  # GET /highlights/new
-  # GET /highlights/new.json
+  
   def new
     @highlight = Highlight.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @highlight }
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @highlight }
     end
   end
-
-  # GET /highlights/1/edit
+  
   def edit
-    @highlight = Highlight.find(params[:id])
+     @highlight = Highlight.find(params[:id])
   end
-
-  # POST /highlights
-  # POST /highlights.json
+  
   def create
-    @highlight = Highlight.new(params[:highlight])
+    @highlight = current_user.highlights.build(params[:highlight])
 
     respond_to do |format|
       if @highlight.save
@@ -52,9 +45,7 @@ class HighlightsController < ApplicationController
       end
     end
   end
-
-  # PUT /highlights/1
-  # PUT /highlights/1.json
+  
   def update
     @highlight = Highlight.find(params[:id])
 
@@ -68,9 +59,7 @@ class HighlightsController < ApplicationController
       end
     end
   end
-
-  # DELETE /highlights/1
-  # DELETE /highlights/1.json
+  
   def destroy
     @highlight = Highlight.find(params[:id])
     @highlight.destroy
@@ -80,4 +69,13 @@ class HighlightsController < ApplicationController
       format.json { head :no_content }
     end
   end
-end
+  
+  private
+  
+    def authorized_user
+      @highlight = Highlight.find(params[:id])
+      unless @highlight.user_id == current_user.id
+        redirect_to highlight_path
+      end
+    end    
+  end
